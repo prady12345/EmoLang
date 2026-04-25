@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/mux"
 	"github.com/gorilla/websocket"
@@ -114,8 +115,12 @@ func main() {
 		http.ServeFile(w, r, "./static/index.html")
 	})
 
-	fmt.Println("Server running on http://localhost:8080")
-	log.Fatal(http.ListenAndServe(":8080", r))
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+	fmt.Println("Server starting on port", port)
+	log.Fatal(http.ListenAndServe(":"+port, r))
 }
 
 // clientWriter pumps messages from the client's send channel to the WebSocket
