@@ -1,0 +1,390 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+  --accent: #5865f2;
+  --accent-dark: #4752c4;
+  --bg: #0f1117;
+  --surface: #1a1d27;
+  --surface2: #22263a;
+  --border: #2a2d3a;
+  --text: #e8e8e8;
+  --text-muted: #888;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+html, body {
+  height: 100%;
+  /* dvh = dynamic viewport height — shrinks when mobile keyboard appears */
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── SCREENS ── */
+.screen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  padding-top: calc(1rem + var(--safe-top));
+  padding-bottom: calc(1rem + var(--safe-bottom));
+}
+
+.hidden { display: none !important; }
+
+/* ── HOME SCREEN ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 2rem 1.5rem;
+  width: 100%;
+  max-width: 440px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 0.3rem;
+}
+
+.logo-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+
+h1 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.subtitle {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 1.75rem;
+  padding-left: 20px;
+}
+
+.field-label {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 0.5rem;
+}
+
+input[type="text"] {
+  width: 100%;
+  height: 48px;           /* 48px = comfortable mobile tap target */
+  padding: 0 1rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  outline: none;
+  transition: border-color 0.15s;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+input[type="text"]:focus {
+  border-color: var(--accent);
+}
+
+/* ── BUTTONS ── */
+.btn {
+  height: 48px;
+  padding: 0 1.25rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, transform 0.08s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.btn:active { transform: scale(0.97); }
+.btn:hover { background: var(--surface2); }
+
+.btn.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.btn.primary:hover { background: var(--accent-dark); border-color: var(--accent-dark); }
+
+.btn.full-width { width: 100%; }
+
+.btn.small {
+  height: 36px;
+  padding: 0 0.75rem;
+  font-size: 0.82rem;
+}
+
+.icon-btn {
+  gap: 5px;
+}
+
+/* ── DIVIDER ── */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1.25rem 0;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+}
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ── JOIN ROW ── */
+.join-row {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.code-input {
+  flex: 1;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* ── CHAT SCREEN — takes full viewport ── */
+#chat-screen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  /* Respect the keyboard: chat-screen fills dvh, keyboard pushes footer up */
+  height: 100dvh;
+  overflow: hidden;
+  align-items: stretch;
+  justify-content: flex-start;
+  padding: 0;
+}
+
+/* ── CHAT HEADER ── */
+.chat-header {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+  padding-top: calc(0.75rem + var(--safe-top));
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  min-height: 56px;
+}
+
+.room-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.room-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+#room-code-display {
+  font-weight: 800;
+  font-size: 1rem;
+  letter-spacing: 3px;
+  color: var(--accent);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── MESSAGES AREA ── */
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  /* Momentum scrolling on iOS */
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+/* ── MESSAGE BUBBLES ── */
+.msg {
+  max-width: min(72%, 360px);
+  padding: 0.55rem 0.9rem;
+  line-height: 1.45;
+  font-size: 0.95rem;
+  word-break: break-word;
+}
+
+.msg.mine {
+  align-self: flex-end;
+  background: var(--accent);
+  border-radius: 18px 18px 4px 18px;
+  color: #fff;
+}
+
+.msg.other {
+  align-self: flex-start;
+  background: var(--surface);
+  border-radius: 18px 18px 18px 4px;
+}
+
+.msg .sender {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 2px;
+  font-weight: 600;
+}
+
+.msg.other .sender {
+  color: var(--accent);
+}
+
+.msg.system {
+  align-self: center;
+  max-width: 100%;
+  background: none;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-style: italic;
+  padding: 0.2rem 0.5rem;
+  text-align: center;
+}
+
+/* ── CHAT FOOTER ── */
+.chat-footer {
+  flex-shrink: 0;
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.65rem 0.75rem;
+  padding-bottom: calc(0.65rem + var(--safe-bottom));
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.chat-footer input {
+  flex: 1;
+  height: 44px;
+  margin: 0;
+  border-radius: 22px;    /* pill shape for the input */
+  padding: 0 1rem;
+  font-size: 0.95rem;
+}
+
+.send-btn {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 50%;
+  background: var(--accent);
+  border-color: var(--accent);
+  flex-shrink: 0;
+}
+
+.send-btn:hover { background: var(--accent-dark); }
+
+/* ── RESPONSIVE BREAKPOINTS ── */
+
+/* Tablet and up: constrain chat to a comfortable width */
+@media (min-width: 600px) {
+  #chat-screen {
+    align-items: center;
+  }
+
+  /* Inner chat container */
+  #chat-screen > * {
+    width: 100%;
+    max-width: 680px;
+  }
+
+  .chat-header {
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+  }
+
+  .chat-footer {
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+  }
+}
+
+/* Desktop: add some breathing room */
+@media (min-width: 900px) {
+  body { background: var(--bg); }
+
+  #chat-screen {
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  #chat-screen > * {
+    max-width: 720px;
+  }
+
+  .messages {
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+  }
+}
+
+/* Very small phones (SE, Moto G): shrink card padding */
+@media (max-width: 360px) {
+  .card { padding: 1.5rem 1.1rem; }
+  h1 { font-size: 1.4rem; }
+}
+
+/* Landscape phone: reduce vertical padding so content fits */
+@media (max-height: 500px) and (orientation: landscape) {
+  .screen { align-items: flex-start; padding-top: 0.5rem; }
+  .card { padding: 1.2rem; }
+  h1 { font-size: 1.3rem; }
+  .subtitle { margin-bottom: 1rem; }
+}
