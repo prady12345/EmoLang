@@ -71,15 +71,12 @@ func (h *Hub) run() {
             h.mu.Unlock()
 
         case client := <-h.unregister:
-            // Remove client from their room
+            // Remove client from their room; keep the room alive so the
+            // code stays valid even when all members have left.
             h.mu.Lock()
             if room, ok := h.rooms[client.roomCode]; ok {
                 delete(room.clients, client)
                 close(client.send)
-                // Clean up empty rooms
-                if len(room.clients) == 0 {
-                    delete(h.rooms, client.roomCode)
-                }
             }
             h.mu.Unlock()
 
